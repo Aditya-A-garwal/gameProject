@@ -32,7 +32,7 @@ def chunkToGraph(coor, chunkIndex):
 
     Requires the coordinates as a sequence and the index of the chunk as an int
     """
-    return [coor[0]+(chunkIndex*8), coor[1]]
+    return [coor[0]+(chunkIndex*8*16), coor[1]]
 
 # Translate coordinates from absolute-space to camera-space
 def graphToCamera(coor, cameraCoor):

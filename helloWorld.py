@@ -22,23 +22,13 @@ screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 pygame.display.set_caption("Terraria")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
-# Create sample chunk buffer of length 9
-c1 = Chunk()
-c2 = Chunk()
-c3 = Chunk()
-c4 = Chunk()
-c5 = Chunk()
-c6 = Chunk()
-c7 = Chunk()
-c8 = Chunk()
-c9 = Chunk()
-chunks = [c1, c2, c3, c4, c5, c6, c7, c8, c9]
+# Create sample chunk buffer of length 5
+chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
 
 # Take a chunk and render it
-def renderChunk(chunkss, camera, display):
-    offset = (32, 32)
-    for c in range(0, 4):
-        chunk = chunkss[c]
+def renderChunk(chnks, camera, display):
+    for c in range(0, len(chnks)):
+        chunk = chnks[c]
         for i in range(0, 256):
             for j in range(0, 8):
                 tile = chunk[i,j]
@@ -46,11 +36,10 @@ def renderChunk(chunkss, camera, display):
                 coors = arrayToChunk((j, i))
                 coors = chunkToGraph(coors, c)
 
-                coors[0] = coors[0] + offset[0]
-                coors[1] = coors[1] + offset[1]
-
                 coors = graphToCamera(coors, camera)
                 coors = cameraToScreen(coors, displaySize)
+
+                coors[1] -= tile.area[2]
 
                 if(tile != None): screen.blit(tile.texture, coors, tile.area)
 
