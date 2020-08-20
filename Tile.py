@@ -1,9 +1,8 @@
 import pygame
 
-
 class Tile:
 
-    def __init__(self, imgpath, offset= (0, 0), area= (16, 16)):
+    def __init__(self, imgpath, offset=(0, 0), area=(16, 16)):
         self.texture = pygame.image.load("Assets/"+imgpath)
         self.area = (offset[0], offset[1], area[0], area[1])
         self.timeval = 0

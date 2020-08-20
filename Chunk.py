@@ -1,10 +1,14 @@
-import pygame, Tile
-
+import pygame
+from Tile import *
 
 class Chunk:
 
     def __init__(self):
-        self.blocks = [[None, None, None, None, None, None, None, None],
+        self.blocks = []
+        for i in range(0, 128):
+            self.blocks.append([Grass(), Grass(), Grass(), Stone(), Stone(), Stone(), Bedrock(), Bedrock()])
+            self.blocks.append([Stone(), Stone(), Stone(), Bedrock(), Bedrock(), Grass(), Grass(), Grass()])
+        '''self.blocks = [[None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None],
@@ -260,7 +264,7 @@ class Chunk:
                        [None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None]]
-
+                        '''
     def __getitem__(self, key):
         return self.blocks[key[0]][key[1]]
 
