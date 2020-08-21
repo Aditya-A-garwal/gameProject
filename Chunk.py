@@ -1,6 +1,9 @@
 import pygame
 from Tile import *
 
+# constants fors chunk width and height
+chunkWidth, chunkHeight = 8, 256
+
 class Chunk:
 
     def __init__(self):
