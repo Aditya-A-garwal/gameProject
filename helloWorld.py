@@ -4,8 +4,12 @@ from Tile import *
 from Chunk import *
 from Renderer import *
 
+# Initialize pygame and start clock
+pygame.init()
+clock = pygame.time.Clock()
+
 # Screen variables
-displaySize = [800, 600]
+displaySize = [pygame.display.Info().current_w-200, pygame.display.Info().current_h-200]
 lastframerate = framerate = 0
 
 # Camera variables
@@ -13,12 +17,8 @@ cam = [0,0]
 camInc = [0,0]
 speed = currchunk = 0
 
-# Initialize pygame and start clock
-pygame.init()
-clock = pygame.time.Clock()
-
 # Create and display window
-screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
+screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE | pygame.SCALED)
 pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 

@@ -30,14 +30,13 @@ def render(chunks, cameraCoors, displaySize, surface):
     """
     rects = []
     for c in range(0, len(chunks)):
-        for i in range(0, chunkHeight):
-            for j in range(0, chunkWidth):
+        for i in range(0, 256):
+            for j in range(0, 8):
 
                 coors = arrayToChunk((j, i))
-                coors[1] += chunks[c][i, j].area[2]
-
                 coors = chunkToGraph(coors, c)
                 coors = graphToCamera(coors, cameraCoors)
+                coors[1] += chunks[c][i, j].area[2]
                 coors = cameraToScreen(coors, displaySize)
 
                 if(chunks[c][i,j] != None): rects.append(surface.blit(chunks[c][i,j].texture, coors, chunks[c][i,j].area))
