@@ -3,6 +3,7 @@ from pygame.locals import *
 from Tile import *
 from Chunk import *
 from Renderer import *
+from opensimplex import OpenSimplex
 
 # Initialize pygame and start clock
 pygame.init()
@@ -18,7 +19,7 @@ camInc = [0,0]
 speed = currchunk = 0
 
 # Create and display window
-screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE | pygame.SCALED)
+screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
@@ -28,6 +29,10 @@ chunkPos = []
 
 # Create sample chunk buffer of length 7
 chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
+
+#Create noise object
+gen = OpenSimplex()
+noiseCoor = 0
 
 # game loop
 running = True
@@ -66,4 +71,6 @@ while running:
 
     currChunk = cam[0]//(8*16)
 
-    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
+    #print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
+    print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
+    noiseCoor+=0.075
