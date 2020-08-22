@@ -10,7 +10,7 @@ clock = pygame.time.Clock()
 
 # Screen variables
 displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
-lastframerate = framerate = 0
+prevFramerate = framerate = 0
 
 # Camera variables
 cam = [0,0]
@@ -59,7 +59,7 @@ while running:
 
     # Camera movement handling
 
-    speed = 32 #Number of pixels to move per-second
+    speed = 64 #Number of pixels to move per-second
     cam[0] += speed/prevFramerate * camInc[0]
     cam[1] += speed/prevFramerate * camInc[1]
 

@@ -36,7 +36,7 @@ def render(chunks, cameraCoors, displaySize, surface):
 
     rects = []
     for c in range(0, len(chunks)):
-        for i in range(0, chunkHeight):
+        for i in range(int(cameraCoors[1]/16-displaySize[1]/32)+127, int(cameraCoors[1]/16+displaySize[1]/32)+129):
             for j in range(0, chunkWidth):
 
                 coors = arrayToChunk((j, i))
