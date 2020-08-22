@@ -29,14 +29,14 @@ def render(chunks, cameraCoors, displaySize, surface):
     Requires chunks, cameraCoors, displaySize as sequences as surface as pygame.Surface
     """
 
-    arrayToChunk = lambda coor: [coor[0] * 16, (coor[1] - chunkHeight / 2) * 16]  # From array-space to chunk-space
+    arrayToChunk = lambda coor: [coor[0] * 16, coor[1] * 16]  # From array-space to chunk-space
     chunkToGraph = lambda coor, chunkInd: [coor[0] + (chunkInd * 8 * 16), coor[1]]  # From chunk-space to absolute-space
     graphToCamera = lambda coor, camCoor: [coor[0] - camCoor[0], coor[1] - camCoor[1]]  # From absolute-space to camera-space
     cameraToScreen = lambda coor, dispSize: [coor[0] + dispSize[0]/2, dispSize[1]/2 - coor[1]]  # From camera-space to screen-space
 
     rects = []
     for c in range(0, len(chunks)):
-        for i in range(int(cameraCoors[1]/16-displaySize[1]/32)+127, int(cameraCoors[1]/16+displaySize[1]/32)+129):
+        for i in range(int(cameraCoors[1]/16-displaySize[1]/42), int(cameraCoors[1]/16+displaySize[1]/32)):
             for j in range(0, chunkWidth):
 
                 coors = arrayToChunk((j, i))

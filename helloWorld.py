@@ -13,7 +13,7 @@ displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current
 prevFramerate = framerate = 0
 
 # Camera variables
-cam = [0,0]
+cam = [0,chunkHeight*16/2]
 camInc = [0,0]
 speed = currchunk = 0
 
@@ -59,10 +59,11 @@ while running:
 
     # Camera movement handling
 
-    speed = 64 #Number of pixels to move per-second
+    speed = 128 #Number of pixels to move per-second
     cam[0] += speed/prevFramerate * camInc[0]
-    cam[1] += speed/prevFramerate * camInc[1]
+    cam[1] += speed / prevFramerate * camInc[1]
+    if(cam[1] > chunkHeight*16 or cam[1] < 0): cam[1] -= speed / prevFramerate * camInc[1]
 
     currChunk = cam[0]//(8*16)
 
-    print(int(cam[0]), int(cam[1]), int(currChunk), int(prevFramerate), sep="\t")
+    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
