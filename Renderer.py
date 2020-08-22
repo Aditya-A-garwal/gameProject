@@ -28,22 +28,22 @@ def render(chunks, cameraCoors, displaySize, surface):
 
     Requires chunks, cameraCoors, displaySize as sequences as surface as pygame.Surface
     """
+
+    arrayToChunk = lambda coor: [coor[0] * 16, (coor[1] - chunkHeight / 2) * 16]  # From array-space to chunk-space
+    chunkToGraph = lambda coor, chunkInd: [coor[0] + (chunkInd * 8 * 16), coor[1]]  # From chunk-space to absolute-space
+    graphToCamera = lambda coor, camCoor: [coor[0] - camCoor[0], coor[1] - camCoor[1]]  # From absolute-space to camera-space
+    cameraToScreen = lambda coor, dispSize: [coor[0] + dispSize[0]/2, dispSize[1]/2 - coor[1]]  # From camera-space to screen-space
+
     rects = []
     for c in range(0, len(chunks)):
-        for i in range(0, 256):
-            for j in range(0, 8):
+        for i in range(0, chunkHeight):
+            for j in range(0, chunkWidth):
 
                 coors = arrayToChunk((j, i))
                 coors = chunkToGraph(coors, c)
                 coors = graphToCamera(coors, cameraCoors)
-                coors[1] += chunks[c][i, j].area[2]
+                coors[1] += chunks[c][i, j].area[2] # Fix rendering offset to render from top-left instead of bottom-left
                 coors = cameraToScreen(coors, displaySize)
 
                 if(chunks[c][i,j] != None): rects.append(surface.blit(chunks[c][i,j].texture, coors, chunks[c][i,j].area))
     return rects
-
-
-arrayToChunk   = lambda coor : [coor[0]*16, coor[1]*16]                             #Translate coords from array-space to chunk-space
-chunkToGraph   = lambda coor, chunkInd : [coor[0]+(chunkInd*8*16), coor[1]]         #Translate coords from chunk-space to absolute-space
-graphToCamera  = lambda coor, camCoor : [coor[0]-camCoor[0], coor[1]-camCoor[1]]    #Translate coords from absolute-space to camera-space
-cameraToScreen = lambda coor, dispSize : [coor[0], dispSize[1]-coor[1]]             #Translate coords from camera-space to screen-space

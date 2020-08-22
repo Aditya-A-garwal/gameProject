@@ -10,6 +10,7 @@ class Chunk:
         self.blocks = []
         for i in range(0, 128):
             self.blocks.append([Grass(), Grass(), Grass(), Stone(), Stone(), Stone(), Bedrock(), Bedrock()])
+        for i in range(0, 128):
             self.blocks.append([Stone(), Stone(), Stone(), Bedrock(), Bedrock(), Grass(), Grass(), Grass()])
         '''self.blocks = [[None, None, None, None, None, None, None, None],
                        [None, None, None, None, None, None, None, None],

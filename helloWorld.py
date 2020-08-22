@@ -9,7 +9,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Screen variables
-displaySize = [pygame.display.Info().current_w-200, pygame.display.Info().current_h-200]
+displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
 lastframerate = framerate = 0
 
 # Camera variables
@@ -38,10 +38,10 @@ while running:
         if event.type == pygame.QUIT: running = False #quit game if user leaves
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     camInc[1] = 8/prevFramerate
-            elif event.key == pygame.K_a:   camInc[0] = -8/prevFramerate
-            elif event.key == pygame.K_s:   camInc[1] = -8/prevFramerate
-            elif event.key == pygame.K_d:   camInc[0] = 8/prevFramerate
+            if event.key == pygame.K_w:     camInc[1] = 1
+            elif event.key == pygame.K_a:   camInc[0] = -1
+            elif event.key == pygame.K_s:   camInc[1] = -1
+            elif event.key == pygame.K_d:   camInc[0] = 1
 
         elif event.type == pygame.KEYUP: camInc = [0, 0]
 
@@ -49,7 +49,7 @@ while running:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
-    screen.fill((255, 255, 255))
+    screen.fill((200, 200, 200))
     render(chunks, cam, displaySize, screen)
 
     # framerate calculation
@@ -58,9 +58,10 @@ while running:
     prevFramerate = 1000 / frameTime
 
     # Camera movement handling
-    speed = 16
-    cam[0] += speed * camInc[0]
-    cam[1] += speed * camInc[1]
+
+    speed = 32 #Number of pixels to move per-second
+    cam[0] += speed/prevFramerate * camInc[0]
+    cam[1] += speed/prevFramerate * camInc[1]
 
     currChunk = cam[0]//(8*16)
 
