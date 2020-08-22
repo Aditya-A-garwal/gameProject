@@ -4,6 +4,7 @@ from Tile import *
 from Chunk import *
 from Renderer import *
 from opensimplex import OpenSimplex
+from TerrainGenerator import *
 
 # Initialize pygame and start clock
 pygame.init()
@@ -28,7 +29,8 @@ chunkBuffer = []
 chunkPos = []
 
 # Create sample chunk buffer of length 7
-chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
+chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
+for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
 
 #Create noise object
 gen = OpenSimplex()
@@ -72,5 +74,4 @@ while running:
     currChunk = cam[0]//(8*16)
 
     #print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
-    print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
-    noiseCoor+=0.075
+    #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))

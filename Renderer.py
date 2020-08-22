@@ -38,12 +38,12 @@ def render(chunks, cameraCoors, displaySize, surface):
     for c in range(0, len(chunks)):
         for i in range(int(cameraCoors[1]/16-displaySize[1]/42), int(cameraCoors[1]/16+displaySize[1]/32)):
             for j in range(0, chunkWidth):
+                if (chunks[c][i, j] != None):
+                    coors = arrayToChunk((j, i))
+                    coors = chunkToGraph(coors, c)
+                    coors = graphToCamera(coors, cameraCoors)
+                    coors[1] += chunks[c][i, j].area[2] # Fix rendering offset to render from top-left instead of bottom-left
+                    coors = cameraToScreen(coors, displaySize)
 
-                coors = arrayToChunk((j, i))
-                coors = chunkToGraph(coors, c)
-                coors = graphToCamera(coors, cameraCoors)
-                coors[1] += chunks[c][i, j].area[2] # Fix rendering offset to render from top-left instead of bottom-left
-                coors = cameraToScreen(coors, displaySize)
-
-                if(chunks[c][i,j] != None): rects.append(surface.blit(chunks[c][i,j].texture, coors, chunks[c][i,j].area))
+                    rects.append(surface.blit(chunks[c][i,j].texture, coors, chunks[c][i,j].area))
     return rects
