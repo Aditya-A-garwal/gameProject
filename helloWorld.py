@@ -25,7 +25,7 @@ speed = currchunk = 0
 movementDict = {pygame.K_w: 1, pygame.K_a: -1,pygame.K_s: -1, pygame.K_d: 1}
 
 # Create and display window
-screen = pygame.display.set_mode(displaySize, pygame.FULLSCREEN)
+screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
@@ -52,27 +52,27 @@ while running:
             
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     playerInc[1] += 1
-            if event.key == pygame.K_s:   playerInc[1] += -1
-            if event.key == pygame.K_a:   playerInc[0] += -1
-            if event.key == pygame.K_d:   playerInc[0] += 1
+            if event.key == pygame.K_w:     playerInc[1] = 1
+            elif event.key == pygame.K_a:   playerInc[0] = -1
+            if event.key == pygame.K_s:     playerInc[1] = -1
+            elif event.key == pygame.K_d:   playerInc[0] = 1
+
             if event.key == pygame.K_ESCAPE:
-                displaySize[0] = 750
-                displaySize[1] = 750
-                pygame.display.set_mode((750,750), pygame.RESIZABLE)
-                pygame.display.set_mode((750,750), pygame.RESIZABLE)
+                displaySize[0] = 800
+                displaySize[1] = 600
+                pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_w:     playerInc[1] -= 1
-            if event.key == pygame.K_s:   playerInc[1] -= -1
-            if event.key == pygame.K_a:   playerInc[0] -= -1
-            if event.key == pygame.K_d:   playerInc[0] -= 1
+            if event.key == pygame.K_w:     playerInc[1] = 0
+            elif event.key == pygame.K_a:   playerInc[0] = 0
+            if event.key == pygame.K_s:     playerInc[1] = 0
+            elif event.key == pygame.K_d:   playerInc[0] = 0
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
-    screen.fill((25, 210, 240))
+    screen.fill((135,206,250))
     render(chunks, cam, player, displaySize, screen)
 
     # Framerate calculation
