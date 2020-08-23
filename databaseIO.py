@@ -2,16 +2,18 @@ import sqlite3
 
 class DBIO:
     conn = 'a'
-    def __init__(self, name):
-        # Initialization (To be run only once)
-        name = name + '.db'
+
+    # Constructor
+    def __init__(self, target):
+        self.name = target + '.db'
         try:
-            self.conn = sqlite3.connect(name)
+            self.conn = sqlite3.connect(self.name)
             c = self.conn.cursor()
 
             # Create Table
             c.execute('''CREATE TABLE terrain(keys INTEGER NOT NULL PRIMARY KEY, binry TEXT)''')
             self.conn.commit()
+
         except:
             pass
 
@@ -42,10 +44,13 @@ class DBIO:
         c.execute('''SELECT binry FROM terrain WHERE keys=?''', (key,))
         res = c.fetchone()
         self.conn.commit()
+
         try:
             return res[0]
         except:
             return res
+
+    # Close the connection
     def stop(self):
         self.conn.close()
 

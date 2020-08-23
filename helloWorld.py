@@ -35,7 +35,7 @@ chunkPos = []
 
 # Create sample chunk buffer of length 7
 chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
-#for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
+for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
 
 #Create noise object
 gen = OpenSimplex()

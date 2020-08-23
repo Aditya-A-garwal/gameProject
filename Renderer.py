@@ -38,7 +38,7 @@ def render(chunks, cameraCoors, playerCoors, displaySize, surface):
     for c in range(0, len(chunks)):
 
         lowerIndex = int(max((cameraCoors[1]-displaySize[1]/2)/16, 0))
-        upperIndex = int(min((cameraCoors[1]+displaySize[1]/2)/16 + 1, CHUNK_HEIGHT)) #1 is added to accomodate for top-left beginning index instead of bottom-left
+        upperIndex = int(min((cameraCoors[1]+displaySize[1]/2)/16 + 1, CHUNK_HEIGHT)) #1 is added to accomodate for exclusiveness of for loops
 
         for i in range(lowerIndex, upperIndex):
 
