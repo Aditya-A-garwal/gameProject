@@ -12,7 +12,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Screen variables
-displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
+displaySize = [pygame.display.Info().current_w, pygame.display.Info().current_h]
 prevFramerate = framerate = 0
 
 # Camera variables
@@ -25,7 +25,7 @@ speed = currchunk = 0
 movementDict = {pygame.K_w: 1, pygame.K_a: -1,pygame.K_s: -1, pygame.K_d: 1}
 
 # Create and display window
-screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
+screen = pygame.display.set_mode(displaySize, pygame.FULLSCREEN)
 pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
@@ -47,21 +47,32 @@ while running:
 
     # event handling loop
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: running = False #quit game if user leaves
+        if event.type == pygame.QUIT:
+            running = False #quit game if user leaves
+            
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     playerInc[1] = 1
-            elif event.key == pygame.K_a:   playerInc[0] = -1
-            elif event.key == pygame.K_s:   playerInc[1] = -1
-            elif event.key == pygame.K_d:   playerInc[0] = 1
+            if event.key == pygame.K_w:     playerInc[1] += 1
+            if event.key == pygame.K_s:   playerInc[1] += -1
+            if event.key == pygame.K_a:   playerInc[0] += -1
+            if event.key == pygame.K_d:   playerInc[0] += 1
+            if event.key == pygame.K_ESCAPE:
+                displaySize[0] = 750
+                displaySize[1] = 750
+                pygame.display.set_mode((750,750), pygame.RESIZABLE)
+                pygame.display.set_mode((750,750), pygame.RESIZABLE)
 
-        elif event.type == pygame.KEYUP: playerInc = [0, 0]
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_w:     playerInc[1] -= 1
+            if event.key == pygame.K_s:   playerInc[1] -= -1
+            if event.key == pygame.K_a:   playerInc[0] -= -1
+            if event.key == pygame.K_d:   playerInc[0] -= 1
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
-    screen.fill((200, 200, 200))
+    screen.fill((25, 210, 240))
     render(chunks, cam, player, displaySize, screen)
 
     # Framerate calculation
@@ -80,5 +91,6 @@ while running:
     cam[1] += (player[1]-cam[1])/12
     currChunk = cam[0]//(8*16)
 
-    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
+##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
+pygame.display.quit()
