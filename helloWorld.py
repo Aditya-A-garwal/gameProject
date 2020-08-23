@@ -52,25 +52,27 @@ while running:
             
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     playerInc[1] = 1
-            elif event.key == pygame.K_a:   playerInc[0] = -1
-            if event.key == pygame.K_s:     playerInc[1] = -1
-            elif event.key == pygame.K_d:   playerInc[0] = 1
-
-            if event.key == pygame.K_ESCAPE:
-                displaySize[0] = 800
-                displaySize[1] = 600
-                pygame.display.set_mode(displaySize, pygame.RESIZABLE)
+            if event.key == pygame.K_w:     playerInc[1] += 1
+            if event.key == pygame.K_s:   playerInc[1] += -1
+            if event.key == pygame.K_a:   playerInc[0] += -1
+            if event.key == pygame.K_d:   playerInc[0] += 1
+##            if event.key == pygame.K_ESCAPE:
+##                displaySize[0] = 750
+##                displaySize[1] = 750
+##                pygame.display.set_mode((750,750), pygame.RESIZABLE)
+##                pygame.display.set_mode((750,750), pygame.RESIZABLE)
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_w or event.key == pygame.K_a:     playerInc[1] = 0
-            if event.key == pygame.K_s or event.key == pygame.K_d:     playerInc[1] = 0
+            if event.key == pygame.K_w:     playerInc[1] -= 1
+            if event.key == pygame.K_s:   playerInc[1] -= -1
+            if event.key == pygame.K_a:   playerInc[0] -= -1
+            if event.key == pygame.K_d:   playerInc[0] -= 1
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
-    screen.fill((135,206,250))
+    screen.fill((25, 210, 240))
     render(chunks, cam, player, displaySize, screen)
 
     # Framerate calculation
@@ -85,8 +87,8 @@ while running:
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
 
     # Camera movement handling
-    cam[0] += (player[0]-cam[0])/12
-    cam[1] += (player[1]-cam[1])/12
+    cam[0] += (player[0]-cam[0])/15
+    cam[1] += (player[1]-cam[1])/15
     currChunk = cam[0]//(8*16)
 
 ##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
