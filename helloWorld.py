@@ -12,7 +12,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # Screen variables
-displaySize = [pygame.display.Info().current_w, pygame.display.Info().current_h]
+displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
 prevFramerate = framerate = 0
 
 # Camera variables
@@ -63,10 +63,8 @@ while running:
                 pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_w:     playerInc[1] = 0
-            elif event.key == pygame.K_a:   playerInc[0] = 0
-            if event.key == pygame.K_s:     playerInc[1] = 0
-            elif event.key == pygame.K_d:   playerInc[0] = 0
+            if event.key == pygame.K_w or event.key == pygame.K_a:     playerInc[1] = 0
+            if event.key == pygame.K_s or event.key == pygame.K_d:     playerInc[1] = 0
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
