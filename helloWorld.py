@@ -1,9 +1,10 @@
 import pygame, numpy, sys, random
 from pygame.locals import *
+from opensimplex import OpenSimplex
+
 from Tile import *
 from Chunk import *
 from Renderer import *
-from opensimplex import OpenSimplex
 from TerrainGenerator import *
 
 # Initialize pygame and start clock
@@ -15,9 +16,13 @@ displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current
 prevFramerate = framerate = 0
 
 # Camera variables
-cam = [0,chunkHeight*16/2]
-camInc = [0,0]
+cam = [0,CHUNK_HEIGHT*16/2]
+
+# Player variable
+player = [0,CHUNK_HEIGHT*16/2]
+playerInc = [0,0]
 speed = currchunk = 0
+movementDict = {pygame.K_w: 1, pygame.K_a: -1,pygame.K_s: -1, pygame.K_d: 1}
 
 # Create and display window
 screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
@@ -29,8 +34,8 @@ chunkBuffer = []
 chunkPos = []
 
 # Create sample chunk buffer of length 7
-chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
-for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
+chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
+#for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
 
 #Create noise object
 gen = OpenSimplex()
@@ -45,33 +50,35 @@ while running:
         if event.type == pygame.QUIT: running = False #quit game if user leaves
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     camInc[1] = 1
-            elif event.key == pygame.K_a:   camInc[0] = -1
-            elif event.key == pygame.K_s:   camInc[1] = -1
-            elif event.key == pygame.K_d:   camInc[0] = 1
+            if event.key == pygame.K_w:     playerInc[1] = 1
+            elif event.key == pygame.K_a:   playerInc[0] = -1
+            elif event.key == pygame.K_s:   playerInc[1] = -1
+            elif event.key == pygame.K_d:   playerInc[0] = 1
 
-        elif event.type == pygame.KEYUP: camInc = [0, 0]
+        elif event.type == pygame.KEYUP: playerInc = [0, 0]
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
     screen.fill((200, 200, 200))
-    render(chunks, cam, displaySize, screen)
+    render(chunks, cam, player, displaySize, screen)
 
-    # framerate calculation
+    # Framerate calculation
     pygame.display.update()
     frameTime = clock.tick(framerate) + 1
     prevFramerate = 1000 / frameTime
 
+    # Player movement handling
+    speed = 128  # Number of pixels to move per-second
+    player[0] += (speed/prevFramerate) * playerInc[0]
+    player[1] += (speed/prevFramerate) * playerInc[1]
+    if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
+
     # Camera movement handling
-
-    speed = 128 #Number of pixels to move per-second
-    cam[0] += speed/prevFramerate * camInc[0]
-    cam[1] += speed / prevFramerate * camInc[1]
-    if(cam[1] > chunkHeight*16 or cam[1] < 0): cam[1] -= speed / prevFramerate * camInc[1]
-
+    cam[0] += (player[0]-cam[0])/15
+    cam[1] += (player[1]-cam[1])/15
     currChunk = cam[0]//(8*16)
 
-    #print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
+    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))

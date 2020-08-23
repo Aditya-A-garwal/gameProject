@@ -23,10 +23,10 @@ Translations
 
 
 # Take a chunk and render it
-def render(chunks, cameraCoors, displaySize, surface):
+def render(chunks, cameraCoors, playerCoors, displaySize, surface):
     """Renders given chunks onto given surface
 
-    Requires chunks, cameraCoors, displaySize as sequences as surface as pygame.Surface
+    Requires chunks, cameraCoors, playerCoors, displaySize as sequences as surface as pygame.Surface
     """
 
     arrayToChunk = lambda coor: [coor[0] * 16, coor[1] * 16]  # From array-space to chunk-space
@@ -36,14 +36,26 @@ def render(chunks, cameraCoors, displaySize, surface):
 
     rects = []
     for c in range(0, len(chunks)):
-        for i in range(int(cameraCoors[1]/16-displaySize[1]/42), int(cameraCoors[1]/16+displaySize[1]/32)):
-            for j in range(0, chunkWidth):
+
+        lowerIndex = int(max((cameraCoors[1]-displaySize[1]/2)/16, 0))
+        upperIndex = int(min((cameraCoors[1]+displaySize[1]/2)/16 + 1, CHUNK_HEIGHT)) #1 is added to accomodate for top-left beginning index instead of bottom-left
+
+        for i in range(lowerIndex, upperIndex):
+
+            for j in range(0, CHUNK_WIDTH):
+
                 if (chunks[c][i, j] != None):
                     coors = arrayToChunk((j, i))
                     coors = chunkToGraph(coors, c)
                     coors = graphToCamera(coors, cameraCoors)
-                    coors[1] += chunks[c][i, j].area[2] # Fix rendering offset to render from top-left instead of bottom-left
+                    coors[1] += chunks[c][i, j].area[2] # Add Offset to render from top-left instead of bottom-left
                     coors = cameraToScreen(coors, displaySize)
 
                     rects.append(surface.blit(chunks[c][i,j].texture, coors, chunks[c][i,j].area))
+
+    # Temporary player crosshair rendering
+    playerPos = graphToCamera(playerCoors, cameraCoors)
+    playerPos = cameraToScreen(playerPos, displaySize)
+
+    pygame.draw.circle(surface, (255,50,50), playerPos, 2)
     return rects
