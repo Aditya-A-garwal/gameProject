@@ -76,8 +76,8 @@ while running:
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
 
     # Camera movement handling
-    cam[0] += (player[0]-cam[0])/15
-    cam[1] += (player[1]-cam[1])/15
+    cam[0] += (player[0]-cam[0])/12
+    cam[1] += (player[1]-cam[1])/12
     currChunk = cam[0]//(8*16)
 
     print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")

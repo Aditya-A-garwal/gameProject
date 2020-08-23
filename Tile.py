@@ -25,3 +25,20 @@ class Bedrock(Tile):
 
     def __init__(self):
         super().__init__("bedrock.png")
+
+
+class Soil:
+    pass
+
+
+class Dirt:
+    pass
+
+
+class Mud:
+    pass
+
+
+class Sand:
+    pass
+

@@ -3,7 +3,7 @@ from Chunk import *
 from Tile import *
 from opensimplex import OpenSimplex
 import random
-WALKING_CONSTANT = 0.0075
+WALKING_CONSTANT = 0.004
 
 def populateChunk(chunk, noiseObj, chunkInd):
     coor = chunkInd * CHUNK_WIDTH

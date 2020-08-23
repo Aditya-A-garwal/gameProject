@@ -273,3 +273,6 @@ class Chunk:
 
     def __setitem__(self, key, value):
         self.blocks[key[0]][key[1]] = value
+
+class ChunkBuffer:
+    pass
