@@ -50,8 +50,8 @@ while running:
             running = False #quit game if user leaves
 
         elif event.type == pygame.KEYDOWN:
-            playerInc[0] = movement[0].get(event.key, 0)
-            playerInc[1] = movement[1].get(event.key, 0)
+            if event.key in movementDict[0]: playerInc[0] = movementDict[0][event.key]
+            if event.key in movementDict[1]: playerInc[1] = movementDict[1][event.key]
 
         elif event.type == pygame.KEYUP:
             if event.key in movementDict[0]: playerInc[0] = 0
