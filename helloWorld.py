@@ -19,7 +19,7 @@ cam = [0,CHUNK_HEIGHT*16/2]
 # Player variables
 player = [0,CHUNK_HEIGHT*16/2]
 playerInc = [0,0]
-speed = currchunk = 0
+speed = currChunk = 0
 movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
 
 #Create noise object
@@ -68,7 +68,6 @@ while running:
 
     screen.fill((30, 175, 250))
     render(chunkBuffer, chunkPos, cam, player, displaySize, screen)
-    loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     # Framerate calculation
     pygame.display.update()
@@ -80,14 +79,14 @@ while running:
     player[0] += (speed/prevFramerate) * playerInc[0]
     player[1] += (speed/prevFramerate) * playerInc[1]
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
+    if(playerInc[0] != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     # Camera movement handling
     cam[0] += (player[0]-cam[0]) * 0.1
     cam[1] += (player[1]-cam[1]) * 0.1
     currChunk = int(cam[0]//(CHUNK_WIDTH*16))
 
+    # print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
+    # print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
 
-
-##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
-    #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
 pygame.display.quit()

@@ -56,9 +56,3 @@ class DBIO:
     # Close the connection
     def stop(self):
         self.conn.close()
-
-# Testing
-a = DBIO('world')
-a[-2] = 'hi'
-print(a[-10])
-a.stop()
