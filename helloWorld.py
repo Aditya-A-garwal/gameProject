@@ -46,8 +46,7 @@ while running:
 
     # event handling loop
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False #quit game if user leaves
+        if event.type == pygame.QUIT: running = False #quit game if user leaves
 
         elif event.type == pygame.KEYDOWN:
             if event.key in movementDict[0]: playerInc[0] = movementDict[0][event.key]
@@ -61,7 +60,7 @@ while running:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
-    screen.fill((25, 210, 240))
+    screen.fill((30, 175, 250))
     render(chunks, cam, player, displaySize, screen)
 
     # Framerate calculation
@@ -76,9 +75,9 @@ while running:
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
 
     # Camera movement handling
-    cam[0] += (player[0]-cam[0])/10
-    cam[1] += (player[1]-cam[1])/10
-    currChunk = cam[0]//(8*16)
+    cam[0] += (player[0]-cam[0]) * 0.1
+    cam[1] += (player[1]-cam[1]) * 0.1
+    currChunk = cam[0]//(CHUNK_WIDTH*16)
 
 ##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))

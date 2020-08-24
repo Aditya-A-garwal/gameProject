@@ -32,13 +32,13 @@ def render(chunks, cameraCoors, playerCoors, displaySize, surface):
     arrayToChunk = lambda coor: [coor[0] * 16, coor[1] * 16]  # From array-space to chunk-space
     chunkToGraph = lambda coor, chunkInd: [coor[0] + (chunkInd * 8 * 16), coor[1]]  # From chunk-space to absolute-space
     graphToCamera = lambda coor, camCoor: [coor[0] - camCoor[0], coor[1] - camCoor[1]]  # From absolute-space to camera-space
-    cameraToScreen = lambda coor, dispSize: [coor[0] + dispSize[0]/2, dispSize[1]/2 - coor[1]]  # From camera-space to screen-space
+    cameraToScreen = lambda coor, dispSize: [coor[0] + dispSize[0]*0.5, dispSize[1]*0.5 - coor[1]]  # From camera-space to screen-space
 
     rects = []
     for c in range(0, len(chunks)):
 
-        lowerIndex = int(max((cameraCoors[1]-displaySize[1]/2)/16, 0))
-        upperIndex = int(min((cameraCoors[1]+displaySize[1]/2)/16 + 1, CHUNK_HEIGHT)) #1 is added to accomodate for exclusiveness of for loops
+        lowerIndex = int(max((cameraCoors[1]-displaySize[1]*0.5)/16, 0))
+        upperIndex = int(min((cameraCoors[1]+displaySize[1]*0.5)/16 + 1, CHUNK_HEIGHT)) #1 is added to accomodate for exclusiveness of for loops
 
         for i in range(lowerIndex, upperIndex):
 
