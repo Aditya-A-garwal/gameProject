@@ -12,7 +12,7 @@ class Tile:
 class Grass(Tile):
 
     def __init__(self):
-        super().__init__("grass.png")
+        super().__init__("tempsoil.png")
 
 
 class Stone(Tile):

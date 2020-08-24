@@ -7,38 +7,42 @@ from Chunk import *
 from Renderer import *
 from TerrainGenerator import *
 
-# Initialize pygame and start clock
-pygame.init()
-clock = pygame.time.Clock()
+from databaseIO import *
 
 # Screen variables
-displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
+displaySize = [0,0]
 prevFramerate = framerate = 0
 
 # Camera variables
 cam = [0,CHUNK_HEIGHT*16/2]
 
-# Player variable
+# Player variables
 player = [0,CHUNK_HEIGHT*16/2]
 playerInc = [0,0]
 speed = currchunk = 0
 movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
+
+#Create noise object
+gen = OpenSimplex()
+
+# Initialize pygame and start clock
+pygame.init()
+clock = pygame.time.Clock()
+displaySize = [pygame.display.Info().current_w//2, pygame.display.Info().current_h//2]
 
 # Create and display window
 screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
 pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
+# Create a database object
+storage = DBIO("myWorld")
+
 # Create chunk buffer and chunk-position buffer
-chunkBuffer = []
-chunkPos = []
+chunkBuffer = [None, None, None, None, None]
+chunkPos = [None, None, None, None, None]
 
-#Create noise object
-gen = OpenSimplex()
-
-# Create sample chunk buffer of length 7
-chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
-for c in range(0, len(chunks)): populateChunk(chunks[c], gen, c)
+loadChunks(chunkBuffer, chunkPos, 0, storage, gen)
 
 # game loop
 running = True
@@ -60,8 +64,11 @@ while running:
             pygame.display.Info()
             displaySize = [screen.get_width(), screen.get_height()]
 
+
+
     screen.fill((30, 175, 250))
-    render(chunks, cam, player, displaySize, screen)
+    render(chunkBuffer, chunkPos, cam, player, displaySize, screen)
+    loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     # Framerate calculation
     pygame.display.update()
@@ -77,7 +84,9 @@ while running:
     # Camera movement handling
     cam[0] += (player[0]-cam[0]) * 0.1
     cam[1] += (player[1]-cam[1]) * 0.1
-    currChunk = cam[0]//(CHUNK_WIDTH*16)
+    currChunk = int(cam[0]//(CHUNK_WIDTH*16))
+
+
 
 ##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     #print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
