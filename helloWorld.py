@@ -22,7 +22,7 @@ cam = [0,CHUNK_HEIGHT*16/2]
 player = [0,CHUNK_HEIGHT*16/2]
 playerInc = [0,0]
 speed = currchunk = 0
-movementDict = {pygame.K_w: 1, pygame.K_a: -1,pygame.K_s: -1, pygame.K_d: 1}
+movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
 
 # Create and display window
 screen = pygame.display.set_mode(displaySize, pygame.RESIZABLE)
@@ -52,21 +52,12 @@ while running:
             
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:     playerInc[1] += 1
-            if event.key == pygame.K_s:   playerInc[1] += -1
-            if event.key == pygame.K_a:   playerInc[0] += -1
-            if event.key == pygame.K_d:   playerInc[0] += 1
-##            if event.key == pygame.K_ESCAPE:
-##                displaySize[0] = 750
-##                displaySize[1] = 750
-##                pygame.display.set_mode((750,750), pygame.RESIZABLE)
-##                pygame.display.set_mode((750,750), pygame.RESIZABLE)
+            if event.key in movementDict[0]: playerInc[0] = movementDict[0][event.key]
+            if event.key in movementDict[1]: playerInc[1] = movementDict[1][event.key]
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_w:     playerInc[1] -= 1
-            if event.key == pygame.K_s:   playerInc[1] -= -1
-            if event.key == pygame.K_a:   playerInc[0] -= -1
-            if event.key == pygame.K_d:   playerInc[0] -= 1
+            if event.key in movementDict[0]: playerInc[0] = 0
+            if event.key in movementDict[1]: playerInc[1] = 0
 
         elif event.type == pygame.VIDEORESIZE:
             pygame.display.Info()
@@ -87,8 +78,8 @@ while running:
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
 
     # Camera movement handling
-    cam[0] += (player[0]-cam[0])/15
-    cam[1] += (player[1]-cam[1])/15
+    cam[0] += (player[0]-cam[0])/10
+    cam[1] += (player[1]-cam[1])/10
     currChunk = cam[0]//(8*16)
 
 ##    print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
