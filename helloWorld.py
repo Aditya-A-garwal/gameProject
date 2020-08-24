@@ -33,13 +33,12 @@ pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 chunkBuffer = []
 chunkPos = []
 
-# Create sample chunk buffer of length 7
-chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
-for c in range(0, len(chunks)): populateChunk(chunks[c], OpenSimplex(), c)
-
 #Create noise object
 gen = OpenSimplex()
-noiseCoor = 0
+
+# Create sample chunk buffer of length 7
+chunks = [Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk(), Chunk()]
+for c in range(0, len(chunks)): populateChunk(chunks[c], gen, c)
 
 # game loop
 running = True
@@ -49,11 +48,10 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False #quit game if user leaves
-            
 
         elif event.type == pygame.KEYDOWN:
-            if event.key in movementDict[0]: playerInc[0] = movementDict[0][event.key]
-            if event.key in movementDict[1]: playerInc[1] = movementDict[1][event.key]
+            playerInc[0] = movement[0].get(event.key, 0)
+            playerInc[1] = movement[1].get(event.key, 0)
 
         elif event.type == pygame.KEYUP:
             if event.key in movementDict[0]: playerInc[0] = 0
