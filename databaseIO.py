@@ -1,11 +1,10 @@
 import sqlite3
 
 class DBIO:
-    conn = 'a'
 
     # Constructor
     def __init__(self, target):
-        self.name = target + '.db'
+        self.name = "Worlds/" + target + '.db'
         try:
             self.conn = sqlite3.connect(self.name)
             c = self.conn.cursor()
@@ -17,24 +16,28 @@ class DBIO:
         except:
             pass
 
-    # Save/Update function
-    def save(self, key, binary):
-        """Saves/Updates the string at a particular key location.
+    # Save magic method
+    def __setitem__(self, key, chunkObj):
+
+        """
+        Saves/Updates the string at a particular key location.
 
         Requires the key as an int and the UTF-8 string.
         """
         c = self.conn.cursor()
-        try:    # Save string at new key location
-            c.execute('''INSERT INTO terrain VALUES (?,?)''', (key, binary))
-            conn.commit()
-
-        except: # Update string at existing key
-            c.execute('UPDATE terrain SET binry =?  WHERE keys=?', (binary, key))
+        try:  # Save string at new key location
+            c.execute('''INSERT INTO terrain VALUES (?,?)''', (key, chunkObj))
             self.conn.commit()
 
-    # Load function
-    def load(self, key):
-        """Retrieves the string stored at a particular key location.
+        except:  # Update string at existing key
+            c.execute('UPDATE terrain SET binry =?  WHERE keys=?', (chunkObj, key))
+            self.conn.commit()
+
+    # Load magic method
+    def __getitem__(self, key):
+
+        """
+        Retrieves the string stored at a particular key location.
 
         Requires the key as an int.
         Returns the string at the key's location (if key is present) or None
@@ -56,6 +59,6 @@ class DBIO:
 
 # Testing
 a = DBIO('world')
-a.save(-188888, 'hi')
-print(a.load(-188888))
+a[-2] = 'hi'
+print(a[-10])
 a.stop()
