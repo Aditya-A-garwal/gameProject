@@ -5,7 +5,6 @@ from opensimplex import OpenSimplex
 from Tile import *
 from Chunk import *
 from Renderer import *
-from TerrainGenerator import *
 
 from databaseIO import *
 
@@ -19,7 +18,7 @@ cam = [0,CHUNK_HEIGHT*16/2]
 # Player variables
 player = [0,CHUNK_HEIGHT*16/2]
 playerInc = [0,0]
-speed = currChunk = 0
+speed = currChunk = prevChunk = deltaChunk = 0
 movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
 
 #Create noise object
@@ -39,10 +38,7 @@ pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 storage = DBIO("myWorld")
 
 # Create chunk buffer and chunk-position buffer
-chunkBuffer = [None, None, None, None, None]
-chunkPos = [None, None, None, None, None]
-
-loadChunks(chunkBuffer, chunkPos, 0, storage, gen)
+chunkBuff = ChunkBuffer(9, storage, 0, gen)
 
 # game loop
 running = True
@@ -67,7 +63,7 @@ while running:
 
 
     screen.fill((30, 175, 250))
-    render(chunkBuffer, chunkPos, cam, player, displaySize, screen)
+    render(chunkBuff, chunkBuff.positions, cam, player, displaySize, screen)
 
     # Framerate calculation
     pygame.display.update()
@@ -79,12 +75,25 @@ while running:
     player[0] += (speed/prevFramerate) * playerInc[0]
     player[1] += (speed/prevFramerate) * playerInc[1]
     if not(0 < player[1] < (CHUNK_HEIGHT*16)): player[1] -= (speed / prevFramerate) * playerInc[1]
-    if(playerInc[0] != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     # Camera movement handling
     cam[0] += (player[0]-cam[0]) * 0.1
     cam[1] += (player[1]-cam[1]) * 0.1
     currChunk = int(cam[0]//(CHUNK_WIDTH*16))
+    deltaChunk = currChunk-prevChunk
+    prevChunk = currChunk
+
+    #if (deltaChunk != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
+
+    if(deltaChunk > 0):
+        #chunkBuff.shiftLeft()
+        #Player has moved right
+        pass
+    elif(deltaChunk < 0):
+        #Player has moved left
+        #chunkBuff.shiftRight()
+        pass
+
 
     # print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     # print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
