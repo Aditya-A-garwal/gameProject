@@ -1,5 +1,6 @@
 import pygame
 
+TILE_TABLE = {}
 
 class Tile:
 
