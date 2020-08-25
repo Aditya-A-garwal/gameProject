@@ -55,7 +55,7 @@ class Renderer:
                         coors = self.cameraToScreen(coors, displaySize)
 
                         texture = TILE_TABLE[chunks[c][i,j].code]
-                        #rects.append(surface.blit(texture, coors, chunks[c][i,j].rect))
+                        rects.append(surface.blit(texture, coors, chunks[c][i,j].rect))
 
         # Temporary player crosshair rendering
         playerPos = self.graphToCamera(playerCoors, cameraCoors)

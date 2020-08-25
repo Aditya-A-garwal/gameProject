@@ -38,7 +38,7 @@ pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 storage = DBIO("myWorld")
 
 # Create chunk buffer and chunk-position buffer
-chunkBuff = ChunkBuffer(3, storage, 0, gen)
+chunkBuff = ChunkBuffer(5, storage, 0, gen)
 
 # Create a renderer
 renderer = Renderer()
