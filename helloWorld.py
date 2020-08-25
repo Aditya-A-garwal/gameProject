@@ -40,6 +40,9 @@ storage = DBIO("myWorld")
 # Create chunk buffer and chunk-position buffer
 chunkBuff = ChunkBuffer(5, storage, 0, gen)
 
+# Create a renderer
+renderer = Renderer()
+
 # game loop
 running = True
 while running:
@@ -62,7 +65,7 @@ while running:
 
 
     screen.fill((30, 175, 250))
-    render(chunkBuff, cam, player, displaySize, screen)
+    renderer.render(chunkBuff, cam, player, displaySize, screen)
 
     # Framerate calculation
     pygame.display.update()
@@ -85,17 +88,17 @@ while running:
     #if (deltaChunk != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     if(deltaChunk > 0):
-        chunkBuff.shiftLeft()
+        #chunkBuff.shiftLeft()
         #Player has moved right
         pass
     elif(deltaChunk < 0):
         #Player has moved left
-        chunkBuff.shiftRight()
+        #chunkBuff.shiftRight()
         pass
 
 
     # print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     # print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
 
-chunkBuff.storage.close()
+chunkBuff.storage.stop()
 pygame.display.quit()

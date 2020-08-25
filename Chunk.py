@@ -316,9 +316,12 @@ class ChunkBuffer:
 
         self.storage[self.positions[0]] = pickle.dumps(self.chunks[0])
         for i in range(0, len(self.chunks) - 1): self.chunks[i] = self.chunks[i + 1]
-        self.chunks[-1] = pickle.loads(self.storage[self.positions[-1]])
+        self.chunks[-1] = self.storage[self.positions[-1]]
 
-        if (self.chunks[-1] is None):
+        if(self.chunks[-1] != None):
+            self.chunks[-1] = pickle.loads(self.chunks[-1])
+
+        if (self.chunks[-1] == None):
             populateChunk(self.chunks[-1], self.noise, self.positions[-1])
 
     def shiftRight(self):
@@ -328,9 +331,12 @@ class ChunkBuffer:
 
         self.storage[self.positions[-1]] = pickle.dumps(self.chunks[-1])
         for i in range(len(self.chunks) - 1, 0): self.chunks[i] = self.chunks[i - 1]
-        self.chunks[0] = pickle.loads(self.storage[self.positions[0]])
+        self.chunks[0] = self.storage[self.positions[0]]
 
-        if (self.chunks[0] is None):
+        if(self.chunks[0] != None):
+            self.chunks[0] = pickle.loads(self.chunks[0])
+
+        if (self.chunks[0] == None):
             populateChunk(self.chunks[0], self.noise, self.positions[0])
 
     def __getitem__(self, key):
