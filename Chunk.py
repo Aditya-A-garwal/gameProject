@@ -338,6 +338,8 @@ class ChunkBuffer:
         if(self.chunks[0] == None):
             self.chunks[0] = Chunk()
             populateChunk(self.chunks[0], self.noise, self.positions[0]-1)
+        else:
+            self.chunks[0] = pickle.loads(self.chunks[0])
 
         for i in range(0, len(self.positions)): self.positions[i] -= 1
 

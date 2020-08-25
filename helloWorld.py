@@ -86,11 +86,9 @@ while running:
     deltaChunk = currChunk-prevChunk
     prevChunk = currChunk
 
-    if(deltaChunk > 0): #Player has moved right
-        chunkBuff.shiftLeft()
+    if(deltaChunk > 0): chunkBuff.shiftLeft() #Player has moved right
 
-    elif(deltaChunk < 0): #Player has moved left
-        chunkBuff.shiftRight()
+    elif(deltaChunk < 0): chunkBuff.shiftRight() #Player has moved left
 
     # print(int(cam[0]), int(cam[1])//TILE_WIDTH, int(currChunk), int(prevFramerate), sep="\t")
 
