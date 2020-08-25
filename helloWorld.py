@@ -38,7 +38,7 @@ pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 storage = DBIO("myWorld")
 
 # Create chunk buffer and chunk-position buffer
-chunkBuff = ChunkBuffer(9, storage, 0, gen)
+chunkBuff = ChunkBuffer(5, storage, 0, gen)
 
 # game loop
 running = True
@@ -86,12 +86,12 @@ while running:
     #if (deltaChunk != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
 
     if(deltaChunk > 0):
-        #chunkBuff.shiftLeft()
+        chunkBuff.shiftLeft()
         #Player has moved right
         pass
     elif(deltaChunk < 0):
         #Player has moved left
-        #chunkBuff.shiftRight()
+        chunkBuff.shiftRight()
         pass
 
 
