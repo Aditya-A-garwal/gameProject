@@ -17,7 +17,6 @@ def populateChunk(chunk, noiseObj, chunkInd):
         coor += 1
         for j in range(96, 95 + height): chunk[j, i] = Grass()
 
-
 class Chunk:
 
     def __init__(self):
@@ -291,23 +290,25 @@ class ChunkBuffer:
 
         self.storage = storageObj
         self.currChunk = chunkInd
-        self.startVal = int(self.currChunk - (length - 1) * 0.5)
-        self.endVal = int(self.currChunk + (length - 1) * 0.5)
 
         self.chunks = []
         self.positions = []
 
         self.noise = noiseObj
 
-        if (length % 2 != 0):
+        startVal = self.currChunk - (length - 1) * 0.5
+        endVal = self.currChunk + (length - 1) * 0.5
 
-            for i in range(self.startVal, self.endVal + 1):
-                self.positions.append(i)
-                tempObj = self.storage[i]
-                if (tempObj == None):
-                    tempObj = Chunk()
-                    populateChunk(tempObj, self.noise, i)
-                self.chunks.append(tempObj)
+        for i in range(int(self.currChunk - (length - 1) * 0.5), int(self.currChunk + (length - 1) * 0.5) + 1):
+            self.positions.append(i)
+            retrieved = self.storage[i]
+            if(retrieved == None):
+                retrieved = Chunk()
+                populateChunk(retrieved, self.noise, i)
+            else:
+                retrieved = pickle.loads(retrieved)
+
+            self.chunks.append(retrieved)
 
     def shiftLeft(self):
 
@@ -322,6 +323,7 @@ class ChunkBuffer:
             self.chunks[-1] = pickle.loads(self.chunks[-1])
 
         if (self.chunks[-1] == None):
+            self.chunks[-1] = Chunk()
             populateChunk(self.chunks[-1], self.noise, self.positions[-1])
 
     def shiftRight(self):
@@ -337,6 +339,7 @@ class ChunkBuffer:
             self.chunks[0] = pickle.loads(self.chunks[0])
 
         if (self.chunks[0] == None):
+            self.chunks[0] = Chunk()
             populateChunk(self.chunks[0], self.noise, self.positions[0])
 
     def __getitem__(self, key):

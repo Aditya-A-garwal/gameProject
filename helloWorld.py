@@ -38,7 +38,7 @@ pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 storage = DBIO("myWorld")
 
 # Create chunk buffer and chunk-position buffer
-chunkBuff = ChunkBuffer(5, storage, 0, gen)
+chunkBuff = ChunkBuffer(3, storage, 0, gen)
 
 # Create a renderer
 renderer = Renderer()
@@ -85,20 +85,13 @@ while running:
     deltaChunk = currChunk-prevChunk
     prevChunk = currChunk
 
-    #if (deltaChunk != 0): loadChunks(chunkBuffer, chunkPos, currChunk, storage, gen)
+    if(deltaChunk > 0): #Player has moved right
+        chunkBuff.shiftLeft()
 
-    if(deltaChunk > 0):
-        #chunkBuff.shiftLeft()
-        #Player has moved right
-        pass
-    elif(deltaChunk < 0):
-        #Player has moved left
-        #chunkBuff.shiftRight()
-        pass
+    elif(deltaChunk < 0): #Player has moved left
+        chunkBuff.shiftRight()
 
-
-    # print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
-    # print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
+    # print(int(cam[0]), int(cam[1])//TILE_WIDTH, int(currChunk), int(prevFramerate), sep="\t")
 
 chunkBuff.storage.stop()
 pygame.display.quit()
