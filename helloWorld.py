@@ -82,6 +82,7 @@ while running:
     cam[0] += (player[0]-cam[0]) * 0.1
     cam[1] += (player[1]-cam[1]) * 0.1
     currChunk = int(cam[0]//(CHUNK_WIDTH*16))
+
     deltaChunk = currChunk-prevChunk
     prevChunk = currChunk
 
