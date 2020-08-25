@@ -63,7 +63,7 @@ while running:
 
 
     screen.fill((30, 175, 250))
-    render(chunkBuff, chunkBuff.positions, cam, player, displaySize, screen)
+    render(chunkBuff, cam, player, displaySize, screen)
 
     # Framerate calculation
     pygame.display.update()

@@ -23,7 +23,7 @@ Translations
 
 
 # Take a chunk and render it
-def render(chunks, posBuffer, cameraCoors, playerCoors, displaySize, surface):
+def render(chunks, cameraCoors, playerCoors, displaySize, surface):
     """Renders given chunks onto given surface
 
     Requires chunks, cameraCoors, playerCoors, displaySize as sequences as surface as pygame.Surface
@@ -46,7 +46,7 @@ def render(chunks, posBuffer, cameraCoors, playerCoors, displaySize, surface):
 
                 if (chunks[c][i, j] != None):
                     coors = arrayToChunk((j, i))
-                    coors = chunkToGraph(coors, posBuffer[c])
+                    coors = chunkToGraph(coors, chunks.positions[c])
                     coors = graphToCamera(coors, cameraCoors)
                     coors[1] += chunks[c][i, j].area[2] # Add Offset to render from top-left instead of bottom-left
                     coors = cameraToScreen(coors, displaySize)

@@ -289,6 +289,8 @@ class ChunkBuffer:
 
         self.storage = storageObj
         self.currChunk = chunkInd
+        self.startVal = int(self.currChunk-(length-1)*0.5)
+        self.endVal = int(self.currChunk+(length-1)*0.5)
 
         self.chunks = []
         self.positions = []
@@ -297,7 +299,7 @@ class ChunkBuffer:
 
         if(length % 2 != 0):
 
-            for i in range(int(self.currChunk-(length-1)*0.5), int(self.currChunk+1+(length-1)*0.5)):
+            for i in range(self.startVal, self.endVal+1):
                 self.positions.append(i)
                 tempObj = self.storage[i]
                 if(tempObj == None):
@@ -309,8 +311,8 @@ class ChunkBuffer:
     def shiftLeft(self):
 
         self.currChunk +=1
-
-        for i in range(0, len(self.positions)): self.positions[i] += 1
+        self.startVal +=1
+        self.endVal +=1
 
         self.storage[self.positions[0]] = self.chunks[0]
         for i in range(0, len(self.chunks)-1):
@@ -320,11 +322,13 @@ class ChunkBuffer:
             self.chunks[-1] = Chunk()
             populateChunk(self.chunks[-1], self.noise, self.positions[-1])
 
+        for i in range(0, len(self.positions)): self.positions[i] += 1
+
     def shiftRight(self):
 
         self.currChunk -=1
-
-        for i in range(0, len(self.positions)): self.positions[i] -= 1
+        self.startVal -= 1
+        self.endVal -= 1
 
         self.storage[self.positions[-1]] = self.chunks[-1]
         for i in range(len(self.chunks), 0, -1):
@@ -334,6 +338,8 @@ class ChunkBuffer:
         if (self.chunks[0] == None):
             self.chunks[0] = Chunk()
             populateChunk(self.chunks[0], self.noise, self.positions[0])
+
+        for i in range(0, len(self.positions)): self.positions[i] -= 1
 
     def __getitem__(self, key):
         return self.chunks[key]
