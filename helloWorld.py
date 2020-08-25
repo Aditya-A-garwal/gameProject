@@ -61,7 +61,6 @@ while running:
             displaySize = [screen.get_width(), screen.get_height()]
 
 
-
     screen.fill((30, 175, 250))
     render(chunkBuff, cam, player, displaySize, screen)
 
@@ -98,4 +97,5 @@ while running:
     # print(int(cam[0]), int(cam[1])//16, int(currChunk), int(prevFramerate), sep="\t")
     # print('-'*(int(gen.noise2d(x=noiseCoor, y=0)*64)+64))
 
+chunkBuff.storage.close()
 pygame.display.quit()
