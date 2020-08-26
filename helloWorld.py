@@ -19,7 +19,7 @@ cam = [0,CHUNK_HEIGHT*16/2]
 player = [0,CHUNK_HEIGHT*TILE_WIDTH*0.5]
 playerInc = [0,0]
 speed = currChunk = prevChunk = deltaChunk = 0
-movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
+movementDict = [{pygame.K_a: -6, pygame.K_d: 6}, {pygame.K_w: 2, pygame.K_s: -2}]
 
 #Create noise object
 gen = OpenSimplex()
@@ -35,7 +35,7 @@ pygame.display.set_caption("Hello World!")
 pygame.display.set_icon(pygame.image.load("Assets/imgtester.png"))
 
 # Create a database object
-storage = DBIO("myWorld")
+storage = DBIO("myWorld2")
 
 # Create chunk buffer and chunk-position buffer
 chunkBuff = ChunkBuffer(5, storage, 0, gen)
