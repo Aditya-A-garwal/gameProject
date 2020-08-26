@@ -1,32 +1,29 @@
 import pygame
 
-TILE_TABLE = {1:"grass.png", 2:"stone.png", 3:"bedrock.png"}
 TILE_WIDTH = 16
-
-def loadImages():
-    for i in range(1, len(TILE_TABLE)+1):
-        TILE_TABLE[i] = pygame.image.load("Assets/"+TILE_TABLE[i])
 
 class Tile:
 
-    def __init__(self, code, rect=(0,0,TILE_WIDTH,TILE_WIDTH)):
-        self.code = code
+    def __init__(self, texture, rect=(0,0,TILE_WIDTH,TILE_WIDTH)):
         self.rect = rect
-
+        self.texture = pygame.image.load("Assets/"+texture)
 
 class Grass(Tile):
 
     def __init__(self):
-        super().__init__(1)
+        super().__init__("grass.png")
 
 
 class Stone(Tile):
 
     def __init__(self):
-        super().__init__(2)
+        super().__init__("stone.png")
 
 
 class Bedrock(Tile):
 
     def __init__(self):
-        super().__init__(3)
+        super().__init__("bedrock.png")
+
+
+TILE_TABLE = {1:Grass(), 2:Stone(), 3:Bedrock()}

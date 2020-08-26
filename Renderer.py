@@ -23,7 +23,7 @@ Translations
 class Renderer:
 
     def __init__(self):
-        loadImages()
+        pass
 
     # Take a chunk and render it
     def render(self, chunks, cameraCoors, playerCoors, displaySize, surface):
@@ -43,17 +43,16 @@ class Renderer:
                 for j in range(0, CHUNK_WIDTH):
                     currentTile = chunks[c].blocks[i][j]
 
-                    if(currentTile != None):
+                    if(currentTile != 0):
 
                         coors = self.arrayToChunk((j, i))
                         self.chunkToGraph(coors, absolutePos)
                         self.graphToCamera(coors, cameraCoors)
 
-                        coors[1] += currentTile.rect[2] # Add Offset to render from top-left instead of bottom-left
+                        coors[1] += TILE_TABLE[currentTile].rect[2] #currentTile.rect[2] # Add Offset to render from top-left instead of bottom-left
                         self.cameraToScreen(coors, displaySize)
 
-                        texture = TILE_TABLE[currentTile.code]
-                        rects.append(surface.blit(texture, coors, currentTile.rect))
+                        rects.append(surface.blit(TILE_TABLE[currentTile].texture, coors, TILE_TABLE[currentTile].rect))
 
         # Temporary player crosshair rendering
         playerPos = [playerCoors[0], playerCoors[1]]

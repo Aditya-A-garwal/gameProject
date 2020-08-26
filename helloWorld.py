@@ -16,7 +16,7 @@ prevFramerate = framerate = 0
 cam = [0,CHUNK_HEIGHT*16/2]
 
 # Player variables
-player = [0,CHUNK_HEIGHT*16/2]
+player = [0,CHUNK_HEIGHT*TILE_WIDTH*0.5]
 playerInc = [0,0]
 speed = currChunk = prevChunk = deltaChunk = 0
 movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
@@ -87,7 +87,6 @@ while running:
     prevChunk = currChunk
 
     if(deltaChunk > 0): chunkBuff.shiftLeft() #Player has moved right
-
     elif(deltaChunk < 0): chunkBuff.shiftRight() #Player has moved left
 
     # print(int(cam[0]), int(cam[1])//TILE_WIDTH, int(currChunk), int(prevFramerate), sep="\t")
