@@ -19,7 +19,7 @@ cam = [0,CHUNK_HEIGHT*16/2]
 player = [0,CHUNK_HEIGHT*TILE_WIDTH*0.5]
 playerInc = [0,0]
 speed = currChunk = prevChunk = deltaChunk = 0
-movementDict = [{pygame.K_a: -6, pygame.K_d: 6}, {pygame.K_w: 2, pygame.K_s: -2}]
+movementDict = [{pygame.K_a: -1, pygame.K_d: 1}, {pygame.K_w: 1, pygame.K_s: -1}]
 
 #Create noise object
 gen = OpenSimplex()
